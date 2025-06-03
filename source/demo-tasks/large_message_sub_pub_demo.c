@@ -358,6 +358,7 @@ static void prvLargeMessageSubscribePublishTask( void * pvParameters )
     static char pcMaxPayloadMessage[ mqttexampleMAX_PAYLOAD_LENGTH ];
     static char pcReceivedPublishPayload[ mqttexampleMAX_PAYLOAD_LENGTH ];
     uint32_t ulLargeMessageFailures = 0, ulLargeMessagePasses = 0;
+	MQTTAgentPublishArgs_t xPublishArgs = { 0 };
     MQTTPublishInfo_t xPublishInfo = { 0 };
     BaseType_t x;
     MQTTStatus_t xCommandAdded;
@@ -381,6 +382,8 @@ static void prvLargeMessageSubscribePublishTask( void * pvParameters )
     xPublishInfo.pPayload = pcMaxPayloadMessage;
     xPublishInfo.payloadLength = mqttexampleMAX_PAYLOAD_LENGTH;
 
+	xPublishArgs.pPublishInfo = &xPublishInfo;
+
     for( ; ; )
     {
         /* Clear out the buffer used to receive incoming publishes.  The
@@ -397,7 +400,7 @@ static void prvLargeMessageSubscribePublishTask( void * pvParameters )
         xCommandParams.blockTimeMs = mqttexampleMAX_COMMAND_SEND_BLOCK_TIME_MS;
         xCommandParams.cmdCompleteCallback = NULL; /* Note not used as going to wait for the echo anyway. */
         xCommandAdded = MQTTAgent_Publish( &xGlobalMqttAgentContext,
-                                           &xPublishInfo,
+                                           &xPublishArgs,
                                            &xCommandParams );
 
         /* Ensure the messages was sent to the MQTT agent task. */

@@ -859,6 +859,7 @@ static OtaMqttStatus_t prvMQTTPublish( const char * const pacTopic,
     OtaMqttStatus_t otaRet = OtaMqttSuccess;
     BaseType_t result;
     MQTTStatus_t mqttStatus = MQTTBadParameter;
+	MQTTAgentPublishArgs_t xPublishArgs = { 0 };
     MQTTPublishInfo_t publishInfo = { 0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTAgentCommandContext_t xCommandContext = { 0 };
@@ -869,6 +870,8 @@ static OtaMqttStatus_t prvMQTTPublish( const char * const pacTopic,
     publishInfo.pPayload = pMsg;
     publishInfo.payloadLength = msgSize;
 
+	xPublishArgs.pPublishInfo = &publishInfo;
+
     xCommandContext.xTaskToNotify = xTaskGetCurrentTaskHandle();
     xTaskNotifyStateClear( NULL );
 
@@ -877,7 +880,7 @@ static OtaMqttStatus_t prvMQTTPublish( const char * const pacTopic,
     xCommandParams.pCmdCompleteCallbackContext = ( void * ) &xCommandContext;
 
     mqttStatus = MQTTAgent_Publish( &xGlobalMqttAgentContext,
-                                    &publishInfo,
+                                    &xPublishArgs,
                                     &xCommandParams );
 
     /* Wait for command to complete so MQTTSubscribeInfo_t remains in scope for the

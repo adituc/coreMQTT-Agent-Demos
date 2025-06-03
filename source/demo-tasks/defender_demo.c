@@ -680,12 +680,15 @@ static bool prvPublishDeviceMetricsReport( uint32_t reportLength )
     static MQTTPublishInfo_t xPublishInfo = { 0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTStatus_t xCommandAdded;
+    MQTTAgentPublishArgs_t xPublishArgs = { 0 }; 
 
     xPublishInfo.qos = MQTTQoS1;
     xPublishInfo.pTopicName = DEFENDER_API_JSON_PUBLISH( democonfigCLIENT_IDENTIFIER );
     xPublishInfo.topicNameLength = DEFENDER_API_LENGTH_JSON_PUBLISH( democonfigCLIENT_IDENTIFIER_LENGTH );
     xPublishInfo.pPayload = &( pcDeviceMetricsJsonReport[ 0 ] );
     xPublishInfo.payloadLength = reportLength;
+
+    xPublishArgs.pPublishInfo = &xPublishInfo; 
 
     xCommandParams.blockTimeMs = defenderexampleMAX_COMMAND_SEND_BLOCK_TIME_MS;
 
@@ -694,7 +697,7 @@ static bool prvPublishDeviceMetricsReport( uint32_t reportLength )
     xCommandParams.cmdCompleteCallback = NULL;
 
     xCommandAdded = MQTTAgent_Publish( &xGlobalMqttAgentContext,
-                                       &xPublishInfo,
+                                       &xPublishArgs,
                                        &xCommandParams );
 
     return xCommandAdded == MQTTSuccess;

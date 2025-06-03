@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\core_mqtt_state.c" />
     <ClCompile Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\core_mqtt_agent.c" />
     <ClCompile Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\core_mqtt_agent_command_functions.c" />
+    <ClCompile Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\core_mqtt_utils.c" />
     <ClCompile Include="..\..\lib\FreeRTOS\mqtt-agent-interface\freertos_command_pool.c" />
     <ClCompile Include="..\..\lib\FreeRTOS\mqtt-agent-interface\freertos_agent_message.c" />
     <ClCompile Include="..\..\lib\FreeRTOS\freertos-kernel\event_groups.c" />
@@ -86,6 +87,7 @@
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include\core_mqtt_config_defaults.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include\core_mqtt_serializer.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include\core_mqtt_state.h" />
+    <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include\core_mqtt_utils.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\interface\transport_interface.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\include\core_mqtt_agent_message_interface.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\include\core_mqtt_agent.h" />
@@ -168,7 +170,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

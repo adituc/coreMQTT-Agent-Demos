@@ -380,6 +380,7 @@ static bool prvSubscribeToTopic( MQTTQoS_t xQoS,
     xSubscribeInfo.qos = xQoS;
     xSubscribeArgs.pSubscribeInfo = &xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 1;
+	xSubscribeArgs.pProperties = NULL; /* No properties used in this demo. */
 
     /* Complete an application defined context associated with this subscribe message.
      * This gets updated in the callback function so the variable must persist until
@@ -436,6 +437,7 @@ static void prvSimpleSubscribePublishTask( void * pvParameters )
 {
     extern UBaseType_t uxRand( void );
     MQTTPublishInfo_t xPublishInfo = { 0UL };
+	MQTTAgentPublishArgs_t xPublishArgs = { 0 };
     char payloadBuf[ mqttexampleSTRING_BUFFER_LENGTH ];
     char taskName[ mqttexampleSTRING_BUFFER_LENGTH ];
     MQTTAgentCommandContext_t xCommandContext;
@@ -471,6 +473,8 @@ static void prvSimpleSubscribePublishTask( void * pvParameters )
     xPublishInfo.pTopicName = pcTopicBuffer;
     xPublishInfo.topicNameLength = ( uint16_t ) strlen( pcTopicBuffer );
     xPublishInfo.pPayload = payloadBuf;
+
+	xPublishArgs.pPublishInfo = &xPublishInfo;
 
     /* Store the handler to this task in the command context so the callback
      * that executes when the command is acknowledged can send a notification
@@ -509,7 +513,7 @@ static void prvSimpleSubscribePublishTask( void * pvParameters )
         ulNotification = ~ulValueToNotify;
 
         xCommandAdded = MQTTAgent_Publish( &xGlobalMqttAgentContext,
-                                           &xPublishInfo,
+                                           &xPublishArgs,
                                            &xCommandParams );
         configASSERT( xCommandAdded == MQTTSuccess );
 

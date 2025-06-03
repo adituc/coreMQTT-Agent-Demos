@@ -403,6 +403,9 @@ static MQTTAgentMessageContext_t xCommandQueue;
  */
 SubscriptionElement_t xGlobalSubscriptionList[ SUBSCRIPTION_MANAGER_MAX_SUBSCRIPTIONS ];
 
+uint8_t pAckPropsBuffer[500]; 
+size_t ackPropsBufferSize = sizeof(pAckPropsBuffer);
+
 /*-----------------------------------------------------------*/
 
 /*
@@ -470,7 +473,9 @@ static MQTTStatus_t prvMQTTInit( void )
                               prvGetTimeMs,
                               prvIncomingPublishCallback,
                               /* Context to pass into the callback. Passing the pointer to subscription array. */
-                              xGlobalSubscriptionList );
+                              xGlobalSubscriptionList,
+                              pAckPropsBuffer,
+                              ackPropsBufferSize);
 
     return xReturn;
 }
@@ -534,7 +539,7 @@ static MQTTStatus_t prvMQTTConnect( bool xCleanSession )
                             &xConnectInfo,
                             NULL,
                             mqttexampleCONNACK_RECV_TIMEOUT_MS,
-                            &xSessionPresent );
+                            &xSessionPresent, NULL, NULL );
 
     LogInfo( ( "Session present: %d\n", xSessionPresent ) );
 
@@ -592,6 +597,7 @@ static MQTTStatus_t prvHandleResubscribe( void )
     {
         xSubArgs.pSubscribeInfo = xSubInfo;
         xSubArgs.numSubscriptions = usNumSubscriptions;
+        xSubArgs.pProperties = NULL; 
 
         /* The block time can be 0 as the command loop is not running at this point. */
         xCommandParams.blockTimeMs = 0U;

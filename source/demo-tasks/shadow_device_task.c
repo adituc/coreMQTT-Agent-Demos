@@ -719,6 +719,7 @@ void vShadowDeviceTask( void * pvParameters )
     bool xStatus = true;
     uint32_t ulNotificationValue;
     static MQTTPublishInfo_t xPublishInfo = { 0 };
+	MQTTAgentPublishArgs_t xPublishArgs = { 0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTStatus_t xCommandAdded;
 
@@ -747,6 +748,7 @@ void vShadowDeviceTask( void * pvParameters )
     xPublishInfo.pPayload = pcUpdateDocument;
     xPublishInfo.payloadLength = ( shadowexampleSHADOW_REPORTED_JSON_LENGTH + 1 );
 
+	xPublishArgs.pPublishInfo = &xPublishInfo;
     /* Subscribe to Shadow topics. */
     xStatus = prvSubscribeToShadowUpdateTopics();
 
@@ -786,7 +788,7 @@ void vShadowDeviceTask( void * pvParameters )
                 LogDebug( ( "Publish content: %.*s", shadowexampleSHADOW_REPORTED_JSON_LENGTH, pcUpdateDocument ) );
 
                 xCommandAdded = MQTTAgent_Publish( &xGlobalMqttAgentContext,
-                                                   &xPublishInfo,
+                                                   &xPublishArgs,
                                                    &xCommandParams );
 
                 if( xCommandAdded != MQTTSuccess )

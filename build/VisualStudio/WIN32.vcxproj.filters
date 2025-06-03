@@ -369,6 +369,9 @@
     <ClCompile Include="..\..\lib\AWS\ota\source\dependency\coreJSON\source\core_json.c">
       <Filter>Lib\FreeRTOS\coreJSON</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\core_mqtt_utils.c">
+      <Filter>Lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\lib\FreeRTOS\freertos-kernel\portable\MSVC-MingW\portmacro.h">
@@ -571,6 +574,9 @@
     </ClInclude>
     <ClInclude Include="..\..\source\configuration-files\logging_config.h">
       <Filter>Configuration Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include\core_mqtt_utils.h">
+      <Filter>Lib\FreeRTOS\coreMQTT-Agent\source\dependency\coreMQTT\source\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
