@@ -367,7 +367,7 @@ static bool prvSubscribeToDefenderTopics( void )
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
 
     /* These must persist until the command is processed. */
-    static MQTTAgentSubscribeArgs_t xSubscribeArgs;
+    static MQTTAgentSubscribeArgs_t xSubscribeArgs = { 0 };
     static MQTTSubscribeInfo_t xSubscribeInfo[ 2 ];
 
     /* Context must persist as long as subscription persists. */
@@ -394,6 +394,7 @@ static bool prvSubscribeToDefenderTopics( void )
      * will persist for the lifetime of the application. */
     xSubscribeArgs.pSubscribeInfo = xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 2;
+	xSubscribeArgs.pProperties = NULL; /* No properties are used in this demo. */
 
     /* Loop in case the queue used to communicate with the MQTT agent is full and
      * attempts to post to it time out.  The queue will not become full if the

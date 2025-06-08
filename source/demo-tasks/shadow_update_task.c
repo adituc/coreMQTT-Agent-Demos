@@ -256,6 +256,7 @@ static bool prvSubscribeToShadowUpdateTopics( void )
      * will persist for the lifetime of the application. */
     xSubscribeArgs.pSubscribeInfo = xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 2;
+	xSubscribeArgs.pProperties = NULL; /* No properties are used in this demo. */
 
     /* Loop in case the queue used to communicate with the MQTT agent is full and
      * attempts to post to it time out.  The queue will not become full if the
@@ -565,6 +566,7 @@ void vShadowUpdateTask( void * pvParameters )
     xPublishInfo.payloadLength = ( shadowexampleSHADOW_DESIRED_JSON_LENGTH + 1 );
 
 	xPublishArgs.pPublishInfo = &xPublishInfo;
+	xPublishArgs.pProperties = NULL; /* No properties are used in this demo. */
 
     /* Subscribe to Shadow topics. */
     xStatus = prvSubscribeToShadowUpdateTopics();

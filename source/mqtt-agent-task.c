@@ -518,11 +518,11 @@ static MQTTStatus_t prvMQTTConnect( bool xCleanSession )
             xConnectInfo.pPassword = democonfigCLIENT_PASSWORD;
             xConnectInfo.passwordLength = ( uint16_t ) strlen( democonfigCLIENT_PASSWORD );
         #else
-            xConnectInfo.pUserName = AWS_IOT_METRICS_STRING;
-            xConnectInfo.userNameLength = AWS_IOT_METRICS_STRING_LENGTH;
-            /* Password for authentication is not used. */
-            xConnectInfo.pPassword = NULL;
-            xConnectInfo.passwordLength = 0U;
+            //xConnectInfo.pUserName = AWS_IOT_METRICS_STRING;
+            //xConnectInfo.userNameLength = AWS_IOT_METRICS_STRING_LENGTH;
+            ///* Password for authentication is not used. */
+            //xConnectInfo.pPassword = NULL;
+            //xConnectInfo.passwordLength = 0U;
         #endif
     #else /* ifdef democonfigUSE_AWS_IOT_CORE_BROKER */
         #ifdef democonfigCLIENT_USERNAME

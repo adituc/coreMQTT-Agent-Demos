@@ -361,6 +361,12 @@ static bool prvSubscribeToTopic( MQTTQoS_t xQoS,
     static int32_t ulNextSubscribeMessageID = 0;
     MQTTAgentCommandContext_t xApplicationDefinedContext = { 0UL };
     MQTTAgentCommandInfo_t xCommandParams = { 0UL };
+    MQTTPropBuilder_t subscribeProperties; 
+    uint8_t buf[100]; 
+	size_t bufSize = sizeof(buf);
+    MQTT_PropertyBuilder_Init(&subscribeProperties, buf, bufSize); 
+
+	MQTTPropAdd_SubscribeId(&subscribeProperties, 1);
 
     /* Create a unique number of the subscribe that is about to be sent.  The number
      * is used as the command context and is sent back to this task as a notification
@@ -380,7 +386,7 @@ static bool prvSubscribeToTopic( MQTTQoS_t xQoS,
     xSubscribeInfo.qos = xQoS;
     xSubscribeArgs.pSubscribeInfo = &xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 1;
-	xSubscribeArgs.pProperties = NULL; /* No properties used in this demo. */
+	xSubscribeArgs.pProperties = &subscribeProperties; /* No properties used in this demo. */
 
     /* Complete an application defined context associated with this subscribe message.
      * This gets updated in the callback function so the variable must persist until
@@ -450,6 +456,12 @@ static void prvSimpleSubscribePublishTask( void * pvParameters )
     char * pcTopicBuffer = topicBuf[ ulTaskNumber ];
     static volatile uint32_t * ulPassCounts[] = { ulQoS0PassCount, ulQoS1PassCount };
     static volatile uint32_t * ulFailCounts[] = { ulQoS0FailCount, ulQoS1FailCount };
+    MQTTPropBuilder_t publishProperties; 
+    uint8_t buf[100]; 
+	size_t bufSize = sizeof(buf);
+    MQTT_PropertyBuilder_Init(&publishProperties, buf, bufSize); 
+
+	MQTTPropAdd_PubMessageExpiry(&publishProperties, 60); /* Set message expiry to 60 seconds. */
 
     /* Have different tasks use different QoS.  0 and 1.  2 can also be used
      * if supported by the broker. */
@@ -475,6 +487,7 @@ static void prvSimpleSubscribePublishTask( void * pvParameters )
     xPublishInfo.pPayload = payloadBuf;
 
 	xPublishArgs.pPublishInfo = &xPublishInfo;
+	xPublishArgs.pProperties = &publishProperties; /* properties used in this demo. */
 
     /* Store the handler to this task in the command context so the callback
      * that executes when the command is acknowledged can send a notification

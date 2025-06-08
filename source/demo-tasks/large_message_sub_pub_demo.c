@@ -317,6 +317,7 @@ static void prvSubscribeToTopic( char * pcReceivedPublishPayload )
     xSubscribeInfo.qos = MQTTQoS1;
     xSubscribeArgs.pSubscribeInfo = &xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 1;
+	xSubscribeArgs.pProperties = NULL; /* No properties used in this demo. */
 
     /* Loop in case the queue used to communicate with the MQTT agent is full and
      * attempts to post to it time out.  The queue will not become full if the
